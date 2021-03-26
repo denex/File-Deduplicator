@@ -214,8 +214,8 @@ def duplicates_iter(file_list: Sequence[FileItem]) -> Iterable[Sequence[FileItem
 
 
 def main(*, search_path: str, mask: str, power, verbose_level: int) -> None:
-    search_path = search_path[0]
     assert power >= 0
+
     global PRINT_ACCESS_ERRORS
     global PRINT_SKIPPED
     global MIN_FILE_SIZE
@@ -223,6 +223,8 @@ def main(*, search_path: str, mask: str, power, verbose_level: int) -> None:
     PRINT_ACCESS_ERRORS = verbose_level > 0
     PRINT_SKIPPED = verbose_level > 1
     MIN_FILE_SIZE = 1 << 10 + power
+
+    search_path = os.path.abspath(search_path[0])
 
     if sys.platform == "win32":
         search_path = os.sep.join(search_path.split("/"))
